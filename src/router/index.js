@@ -9,8 +9,8 @@ const router = createRouter({
       component: () => import('../views/login/index.vue')
     },
     {
-      path: '/layout',
-      name: 'Layout',
+      path: '/',
+      name: '首页',
       component: () => import('../layout/index.vue'),
     children: [
       {

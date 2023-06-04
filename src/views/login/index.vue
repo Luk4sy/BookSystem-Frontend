@@ -4,9 +4,9 @@
       <div class="title-container">
         <h3 class="title">用户登录</h3>
       </div>
-      <el-form-item prop="account">
+      <el-form-item prop="username">
         <el-icon class="svg-container"><User /></el-icon>
-        <el-input v-model="form.account" />
+        <el-input v-model="form.username" />
       </el-form-item>
       <el-form-item prop="password">
         <el-icon class="svg-container"><Lock /></el-icon>
@@ -26,12 +26,12 @@ import { login } from "@/api/login";
 import { View } from "@element-plus/icons";
 
 const form = ref({
-  account: "",
+  username: "",
   password: "",
 });
 
 const rules = ref({
-  account: [
+  username: [
     {
       required: true,
       message: "Please input Activity name",
@@ -51,10 +51,21 @@ const formRef = ref(null);
 const handleLogin = () => {
   formRef.value.validate(async (valid) => {
     if (valid) {
-      alert("submit!");
-      await login(form.value);
+      console.log(form.value);
+      await login(form.value)
+        .then((response) => {
+          //TODO:登录成功处理
+          if (response.data.success) {
+            console.log("登录成功");
+          } else {
+            //TODO:失败弹窗
+            console.log("登录失败");
+          }
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     } else {
-      console.log("error submit!!");
       return false;
     }
   });

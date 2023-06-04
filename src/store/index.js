@@ -2,7 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
-    collapseFlag: true
+    collapseFlag: false
   },
   mutations: {
     toggleCollapseFlag(state) {
