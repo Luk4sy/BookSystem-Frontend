@@ -5,7 +5,7 @@
     </el-form-item>
 
     <el-form-item label="书籍ID">
-      <el-input v-model="form.id" />
+      <el-input v-model="form.bookId" />
     </el-form-item>
 
     <el-form-item label="ISBN号">
@@ -40,10 +40,11 @@
 <script setup>
 import { reactive } from "vue";
 import { onMounted } from "vue";
-import { useRoute } from "vue-router";
+import { useRouter} from "vue-router";
 import { useStore } from "vuex";
+import { borrowBook } from "../../api/borrow";
 
-const route = useRoute();
+const router = useRouter();
 let form = reactive({});
 
 onMounted(() => {
@@ -51,10 +52,21 @@ onMounted(() => {
   form.isbn = useStore().state.currentBorrowBookData.isbn;
   form.shelfNumber = useStore().state.currentBorrowBookData.shelfNumber;
   form.author = useStore().state.currentBorrowBookData.author;
-  form.id = useStore().state.currentBorrowBookData.id;
+  form.bookId = useStore().state.currentBorrowBookData.id;
 
   console.log(form);
 });
+
+const onSubmit = async () => {
+  try {
+    const response = await borrowBook(form.bookId, form.date);
+    console.log(response.data);
+    alert("借书成功，请注意按照规定时间归还!");
+    router.push({ path: '/userrecord'})
+  } catch (error) {
+    console.error(error);
+  }
+};
 </script>
 
 <style lang="scss" scoped></style>

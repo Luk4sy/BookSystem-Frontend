@@ -77,19 +77,18 @@ const handleSwitchChange = async (book) => {
 
 const handleBorrow = (book) => {
 console.log(book)
-router.push({name: "borrowBook"})
   // router.push({ name: "borrowBook", params: {
   //   name: "SG"
   // }})
   store.commit("storeCurrentBorrowData", book)
-  // if (book.status === "可借阅") {
-  //   // TODO:跳转到填写借阅信息的页面
-  //   router.push({ name: 'borrowBook', params: { username: 'eduardo' } })
-  //   console.log("跳转借阅");
-  // } else {
-  //   // 弹出提示
-  //   alert("该书正处于借阅中！")
-  // }
+  if (book.status === "可借阅") {
+    // TODO:跳转到填写借阅信息的页面
+    router.push({ name: 'borrowBook'})
+    console.log("跳转借阅");
+  } else {
+    // 弹出提示
+    alert("该书正处于借阅中！")
+  }
 };
 </script>
 
