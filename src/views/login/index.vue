@@ -24,11 +24,14 @@ import { Lock } from "@element-plus/icons";
 import { User } from "@element-plus/icons";
 import { login } from "@/api/login";
 import { View } from "@element-plus/icons";
+import { useRouter } from 'vue-router'; 
 
 const form = ref({
   username: "",
   password: "",
 });
+
+const router = useRouter();  
 
 const rules = ref({
   username: [
@@ -54,11 +57,19 @@ const handleLogin = () => {
       console.log(form.value);
       await login(form.value)
         .then((response) => {
-          //TODO:登录成功处理
-          if (response.data.success) {
-            console.log("登录成功");
-          } else {
+          //admin登录成功处理
+          if (response.data.success && response.data.user.role === 'admin') {
+            console.log("管理员登录成功");
+            router.push({ path: '/admin' }); 
+          } else if(response.data.success && response.data.user.role === 'user'){
+            //TODO:用户登录页面
+            console.log("用户登录成功");
+            router.push({ path: '/user' }); 
+          }
+          else {
             //TODO:失败弹窗
+            console.log(response.data)
+            alert("密码或用户名错误！")
             console.log("登录失败");
           }
         })

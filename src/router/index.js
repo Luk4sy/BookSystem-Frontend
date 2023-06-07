@@ -9,34 +9,54 @@ const router = createRouter({
       component: () => import('../views/login/index.vue')
     },
     {
-      path: '/',
-      name: '首页',
+      path: '/user',
+      name: '图书借阅系统首页',
+      component: () => import('../layout/index2.vue'),
+      children: [
+        {
+          path: '/usermain',
+          name: '用户图书信息',
+          component: () => import('@/views/main/index2.vue')
+        },
+        {
+          path: '/borrow',
+          name: 'borrowBook',
+          component: () => import('@/views/borrow/index.vue'),
+          props: {book: true}
+        },
+        {
+          path: '/userrecord',
+          name: '当前借书记录',
+          component: () => import('@/views/record/index2.vue')
+        },
+      ]
+    },
+    
+    {
+      path: '/admin',
+      name: '管理员首页',
       component: () => import('../layout/index.vue'),
     children: [
       {
-        path: '/users',
-        name: 'users',
-        component: () => import('@/views/users/index.vue')
+        path: '/main',
+        name: '图书信息',
+        component: () => import('@/views/main/index.vue')
+      },
+      
+      {
+        path: '/allrecord',
+        name: '借书记录',
+        component: () => import('@/views/record/index.vue')
       },
       {
-        path: '/categories',
-        name: 'categories',
-        component: () => import('@/views/categories/index.vue')
-      },
-      {
-        path: '/goods',
-        name: 'goods',
-        component: () => import('@/views/goods/index.vue')
+        path: '/book',
+        name: '添加书籍',
+        component: () => import('@/views/book/index.vue')
       },
       {
         path: '/orders',
         name: 'orders',
         component: () => import('@/views/orders/index.vue')
-      },
-      {
-        path: '/params',
-        name: 'params',
-        component: () => import('@/views/params/index.vue')
       },
       {
         path: '/reports',
